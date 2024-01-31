@@ -27,3 +27,19 @@ code {
 .navbar-nav{
   margin-left: auto !important;
 }
+.btn{
+  color: antiquewhite !important;
+  box-shadow: none !important;
+  background-color: black;
+}
+
+
+
+input,select ,.ant-picker{
+  box-shadow: none;
+  margin-top: 10px;
+  width: 100% !important;
+  border:2px solid black !important ;
+  border-radius: 3px !important;
+  height: 35px !important;
+}
