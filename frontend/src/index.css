@@ -43,3 +43,22 @@ input,select ,.ant-picker{
   border-radius: 3px !important;
   height: 35px !important;
 }
+
+.btn1{
+  background-color: green;
+
+}
+
+.btn2{
+  background-color: red;
+}
+
+.smallimg{
+      height: 60px;
+      width: 50px;
+}
+
+.td{
+  justify-content: center;
+  margin: 50px;
+}

@@ -12,11 +12,11 @@ function Adminscreen() {
       </h2>
       <Tabs defaultActiveKey="1">
         
-        <TabPane tab="Rooms" key="1">
-          
+        <TabPane tab="Employees" key="1">
+          <Employees/>
         </TabPane>
-        <TabPane tab="Add Room" key="2">
-        <Addroom/>
+        <TabPane tab="Add employees" key="2">
+        <Addemployee/>
         </TabPane>
        
       </Tabs>
@@ -26,7 +26,9 @@ function Adminscreen() {
 
 export default Adminscreen
 
-export function Addroom() {
+//ademployees
+
+export function Addemployee() {
 
  
     const[name , setname] = useState('')
@@ -78,7 +80,7 @@ console.log(newemployee);
              />
 
               <div className="text-right">
-              <button className="btn btn-primary mt-2" onClick={addemployee}>Add Room</button>
+              <button className="btn btn-primary mt-2" onClick={addemployee}>Add Employee</button>
             </div>
 
           </div>
@@ -89,4 +91,59 @@ console.log(newemployee);
       
     )
   }
+  export function Employees() {
+    const [employee, setEmployee] = useState([]);
   
+    const fetchData = async () => {
+      try {
+        const data = await axios.get("http://localhost:5000/api/employees/getallemployees");
+        setEmployee(data.data); // Assuming the array is directly available in the response data
+       
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchData();
+    }, []);
+  
+    return (
+      <div className="row">
+        <div className="col-md-12">
+          <h1>Employees</h1>
+  
+          <table className="table table-bordered table-dark">
+            <thead className="bs">
+              <tr>
+
+                <th>Name</th>
+                <th>Email</th>
+                <th>Rent per day</th>
+                <th>Profile</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              {employee.length > 0 &&
+                employee.map((employee) => (
+                  <tr key={employee._id}>
+                    <td>{employee.name}</td>
+                    <td>{employee.email}</td>
+                    <td>{employee.rentperday}</td>
+                    <td><img src={employee.imageurl[0]} alt="Profile" className="smallimg"/></td>
+                    <td><button className="btn1">update</button>
+                    <button className="btn2">delete</button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+
+          
+        
+        </div>
+      </div>
+    );
+  }

@@ -27,4 +27,15 @@ router.route('/addemployee').post(async(req,res)=>{
     }
   })
 
+
+  router.get("/getallemployees",async(req,res) =>{
+
+    try {
+      const employees = await Employee.find()
+      return res.json(employees);
+    } catch (error) {
+        return res.status(400).json({massage : error})
+    }
+});
+
 module.exports=router;
