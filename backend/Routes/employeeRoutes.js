@@ -38,4 +38,32 @@ router.route('/addemployee').post(async(req,res)=>{
     }
 });
 
+
+router.route('/updateemployee/:id').put(async(req, res) => {
+
+  const employeeid = req.params.id;
+  const {name, email, rentperday, imageurl} = req.body;
+
+  const updateemployee = {
+
+    name,
+    email,
+    rentperday,
+    imageurl,
+     
+  };
+
+  try {
+      
+      await Employee.findByIdAndUpdate(employeeid, updateemployee);
+      return res.status(200).json({status : "Employee updated"});
+
+  } catch (error) {
+      
+      return res.status(400).json({status : "Error with update employee", message : error});
+    }
+
+});
+
+
 module.exports=router;

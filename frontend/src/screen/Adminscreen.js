@@ -1,5 +1,6 @@
 import React, { useState ,useEffect} from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
@@ -133,7 +134,8 @@ console.log(newemployee);
                     <td>{employee.email}</td>
                     <td>{employee.rentperday}</td>
                     <td><img src={employee.imageurl[0]} alt="Profile" className="smallimg"/></td>
-                    <td><button className="btn1">update</button>
+                    <td>
+                      <Link to={`/update/${employee._id}`}><button className="btn1">update</button></Link>
                     <button className="btn2">delete</button>
                     </td>
                   </tr>
