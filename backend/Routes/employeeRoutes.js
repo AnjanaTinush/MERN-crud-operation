@@ -38,6 +38,18 @@ router.route('/addemployee').post(async(req,res)=>{
     }
 });
 
+router.route('/getallemployees/:id').post(async(req,res) => {
+
+  const employeeid = req.params.id;
+
+  try {
+    const employee = await Employee.findById(employeeid);
+    return res.status(200).json({status : "Employee is fatched",employee});
+  } catch (error) {
+    return res.status(400).json({status : "Error with fatch employee", message : error});
+  }
+})
+
 
 router.route('/updateemployee/:id').put(async(req, res) => {
 
@@ -64,6 +76,18 @@ router.route('/updateemployee/:id').put(async(req, res) => {
     }
 
 });
+
+router.route('/delete/:id').delete(async(req,res) => {
+
+  const id = req.params.id;
+
+  try {
+    await Employee.findByIdAndDelete(id);
+    return res.status(200).json({status : "Employee deleted"});
+  } catch (error) {
+    return res.status(400).json({status : "Error with update employee", message : error});
+  }
+})
 
 
 module.exports=router;
