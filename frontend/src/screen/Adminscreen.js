@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Tabs } from "antd";
+import { jsPDF } from "jspdf";
+
 
 const { TabPane } = Tabs;
 
@@ -134,15 +136,40 @@ export function Employees() {
   }
  }
 
- const pdf = {
-         name :"",
-         email :"",
-         rentperday: ""
- }
+ 
+ 
+ function generatePDF() {
+  const doc = new jsPDF();
 
- async function genaratepdf(){
-            axios.post('/createpdf',pdf)
- }
+  // Add a title and styling
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.text("Employee Report", 20, 15);
+
+  // Loop through each employee and add formatted information to the PDF
+  employee.forEach((emp, index) => {
+    const y = 30 + index * 40;
+
+    // Employee card styling
+    doc.setDrawColor(0);
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(20, y, 170, 40, 3, 3, "FD");
+
+    // Employee information
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text(`Name: ${emp.name}`, 25, y + 10);
+    doc.text(`Email: ${emp.email}`, 25, y + 20);
+    doc.text(`Rent per day: ${emp.rentperday}`, 25, y + 30);
+    doc.addImage(emp.imageurl[0], "JPEG", 150, y, 30, 30);
+  });
+
+  // Save the PDF
+  doc.save("employee_report.pdf");
+}
+
+
+ 
 
  
 
@@ -167,8 +194,8 @@ export function Employees() {
               employee.map((employee) => (
                 <tr key={employee._id}>
                   <td>{employee.name}</td>
-                  <td>{employee.email}</td>
-                  <td>{employee.rentperday}</td>
+                  <td >{employee.email}</td>
+                  <td >{employee.rentperday}</td>
                   <td>
                     <img
                       src={employee.imageurl[0]}
@@ -192,7 +219,13 @@ export function Employees() {
           </tbody>
         </table>
 
-        <button className="btn btn -primary "style={{textAlign:"left"}} onClick={genaratepdf}>Genarate Report</button>
+        <button
+        className="btn btn-primary"
+        style={{ textAlign: "left" }}
+        onClick={generatePDF}
+      >
+        Generate Report
+      </button>
       </div>
     </div>
   );
