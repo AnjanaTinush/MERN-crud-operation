@@ -134,6 +134,18 @@ export function Employees() {
   }
  }
 
+ const pdf = {
+         name :"",
+         email :"",
+         rentperday: ""
+ }
+
+ async function genaratepdf(){
+            axios.post('/createpdf',pdf)
+ }
+
+ 
+
   return (
     <div className="row">
       <div className="col-md-12">
@@ -179,6 +191,8 @@ export function Employees() {
               ))}
           </tbody>
         </table>
+
+        <button className="btn btn -primary "style={{textAlign:"left"}} onClick={genaratepdf}>Genarate Report</button>
       </div>
     </div>
   );
